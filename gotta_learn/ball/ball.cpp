@@ -1,43 +1,72 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <iostream>
 #include <thread>
-#include <chrono> 
+#include <chrono>
 
 int main() {
   int x = 0;
   int y = 0;
-  int ex = rand() % 29 + 1;
-  int ey = rand() % 19 + 1;
+  srand(time(NULL));
+  int ex = rand() % 29;
+  int ey = rand() % 19;
 
   int vx = 1;
   int vy = 1;
   int left = 0;
-  int right = 30;
+  int right = 50;
   int top = 0;
   int bottom = 20;
 
   int i, j;
   while(1) {
+  	// top boundary
+  	printf("+");
+  	for(i=left;i<right;i++) {
+  	  printf("-");
+  	}
+  	printf("+\n");
+
   	x = x + vx;
   	y = y + vy;
 
+  	// everything inside
+  	for (j=top;j<bottom;j++) {
+  	  // left boundary
+  	  printf("|");
+  	  for (i=left;i<right;i++) {
+  	  	if (i == x && j==y) {
+  	  	  printf("o");
+  	  	} else if (i == ex && j == ey) {
+  	      printf("x");
+  	  	} else {
+  	  	  printf(" ");
+  	  	}
+  	  }
+  	  // right boundary
+  	  printf("|\n");
+  	}
+
+  	// bottom boundary
+  	printf("+");
+  	for(i=left;i<right;i++) {
+  	  printf("-");
+  	}
+  	printf("+\n");
+
   	// system("cls");
-  	for(i=0;i<x;i++) {
-  	  printf("\n");
-  	}
-  	for(j=0;j<y;j++) {
-  	  printf(" ");
-  	}
-  	printf("o");
-  	printf("\n");
+
   	std::this_thread::sleep_for (std::chrono::seconds(1));
   	//sleep(50);
+    if (x == ex && y == ey) {
+      break;
+    }
 
-  	if ((x == left) || (x == right)) {
+  	if ((x == left) || (x == right - 1)) {
   	  vx = -vx;
   	}
-  	if ((y == top) || y == bottom) {
+  	if ((y == top) || y == bottom - 1) {
   	  vy = -vy;
   	}
   }
