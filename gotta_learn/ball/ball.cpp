@@ -21,54 +21,56 @@ int main() {
 
   int i, j;
   while(1) {
-  	// top boundary
-  	printf("+");
-  	for(i=left;i<right;i++) {
-  	  printf("-");
-  	}
-  	printf("+\n");
+    // top boundary
+    printf("+");
+    for(i=left;i<right;i++) {
+      printf("-");
+    }
+    printf("+\n");
 
-  	x = x + vx;
-  	y = y + vy;
+    x = x + vx;
+    y = y + vy;
 
-  	// everything inside
-  	for (j=top;j<bottom;j++) {
-  	  // left boundary
-  	  printf("|");
-  	  for (i=left;i<right;i++) {
-  	  	if (i == x && j==y) {
-  	  	  printf("o");
-  	  	} else if (i == ex && j == ey) {
-  	      printf("x");
-  	  	} else {
-  	  	  printf(" ");
-  	  	}
-  	  }
-  	  // right boundary
-  	  printf("|\n");
-  	}
+    // everything inside
+    for (j=top;j<bottom;j++) {
+      // left boundary
+      printf("|");
+      for (i=left;i<right;i++) {
+        if (i == x && j==y) {
+          printf("o");
+        } else if (i == ex && j == ey) {
+          printf("x");
+        } else {
+          printf(" ");
+        }
+      }
+      // right boundary
+      printf("|\n");
+    }
 
-  	// bottom boundary
-  	printf("+");
-  	for(i=left;i<right;i++) {
-  	  printf("-");
-  	}
-  	printf("+\n");
+    // bottom boundary
+    printf("+");
+    for(i=left;i<right;i++) {
+      printf("-");
+    }
+    printf("+\n");
 
-  	// system("cls");
+    // system("cls");
 
-  	std::this_thread::sleep_for (std::chrono::seconds(1));
-  	//sleep(50);
-    if (x == ex && y == ey) {
+    std::this_thread::sleep_for (std::chrono::seconds(1));
+    //sleep(50);
+     if (x == ex && y == ey) {
       break;
     }
 
   	if ((x == left) || (x == right - 1)) {
   	  vx = -vx;
+  	  printf("\a");
   	}
   	if ((y == top) || y == bottom - 1) {
-  	  vy = -vy;
-  	}
+      vy = -vy;
+   	  printf("\a");
+    }
   }
 
   return 0;
