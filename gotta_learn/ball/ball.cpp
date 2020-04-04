@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <iostream>
-#include <thread>
-#include <chrono>
+#include <Windows.h>
 
 int main() {
   int x = 0;
@@ -21,6 +19,8 @@ int main() {
 
   int i, j;
   while(1) {
+    system("cls");
+
     // top boundary
     printf("+");
     for(i=left;i<right;i++) {
@@ -55,11 +55,10 @@ int main() {
     }
     printf("+\n");
 
-    // system("cls");
-
-    std::this_thread::sleep_for (std::chrono::seconds(1));
-    //sleep(50);
-     if (x == ex && y == ey) {
+    //std::this_thread::sleep_for (std::chrono::seconds(1));
+    Sleep(50);
+    if (x == ex && y == ey) {
+      printf("The target is reached.");
       break;
     }
 
