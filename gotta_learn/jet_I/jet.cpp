@@ -74,6 +74,7 @@ int main() {
     }
   }
 
-  printf("DONE TARGET PRACTISE\n");
+  system("cls");
+  printf("\n\n\n\n\nDONE TARGET PRACTISE\n\n\n\n\n");
   return 0;
 }
