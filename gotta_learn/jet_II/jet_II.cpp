@@ -38,10 +38,16 @@ void show() {
     gotoxy(0, 0);
     //system("cls");
     int i, j;
-    for (j = 0; j < h; j++) {
+    for (j = 0; j < h + 3; j++) {
         for (i = 0; i < w; i++) {
             if (i == px && j == py) {
                 printf("*");
+            } else if (i >= px - 2 && i <= px + 2 && j == py + 1) {
+                printf("*");
+            } else if (i == px - 1 && j == py + 2) {
+                printf("/");
+            } else if (i == px + 1 && j == py + 2) {
+                printf("\\");
             } else if (i == bx && j == by) {
                 printf("|");
             } else if (i == ex && j == ey) {
@@ -64,6 +70,7 @@ void updateWithoutInput() {
         by = -1;
     }
 
+    // bullet hit target
     if (bx == ex && by == ey) {
         score++;
 
@@ -74,6 +81,19 @@ void updateWithoutInput() {
         // reset bullet
         bx = -1;
         by = -1;
+    }
+
+    // target hit jet
+    if ((ex == px && ey == py) ||
+        (ex >= px - 2 && ex <= px + 2 && ey == py + 1) ||
+        (ex == px - 1 && ey == py + 2) ||
+        (ex == px + 1 && ey == py + 2)) {
+        
+        if (score > 0) score--;
+
+        // reset target
+        ey = 0;
+        ex = rand() % (w - 2) + 1;
     }
 
     if (ey > h) {
@@ -95,9 +115,9 @@ void updateWithInput() {
     if (_kbhit()) {
         input = _getch();
         if (input == 'a' && px > 0) px--;
-        if (input == 'd' && px < w) px++;
+        if (input == 'd' && px < w - 1) px++;
         if (input == 'w' && py > 5) py--;
-        if (input == 's' && py < h) py++;
+        if (input == 's' && py < h - 1) py++;
         if (input == ' ' && bx == -1 && by == -1) {
             bx = px;
             by = py - 1;
