@@ -34,8 +34,7 @@ void show() {
 		for (i = 0; i < W; i++) {
 			if (cells[i][j] == 0) {
 				printf(" ");
-			}
-			else {
+			} else {
 				printf("*");
 			}
 		}
@@ -44,10 +43,42 @@ void show() {
 	Sleep(100);
 }
 
+void updateWithoutInput() {
+	int newCells[H][W];
+	int n;
+	int i, j;
+	for (j = 1; j <= H - 1; j++) {
+		for (i = 1; i <= W - 1; i++) {
+			n = cells[j - 1][i - 1] + 
+				cells[j - 1][i] +
+				cells[j - 1][i + 1] +
+				cells[j][i - 1] +
+				cells[j][i + 1] +
+				cells[j + 1][i - 1] +
+				cells[j + 1][i] +
+				cells[j + 1][i + 1];
+			if (n == 3) {
+				newCells[i][j] = 1;
+			} else if (n == 2) {
+				newCells[i][j] = cells[i][j];
+			} else {
+				newCells[i][j] = 0;
+			}
+		}
+	}
+
+	for (j = 1; j <= H - 1; j++) {
+		for (i = 1; i <= W - 1; i++) {
+			cells[i][j] = newCells[i][j];
+		}
+	}
+}
+
 int main() {
 	startup();
 	while (1) {
 		show();
+		updateWithoutInput();
 	}
 
 	return 0;
