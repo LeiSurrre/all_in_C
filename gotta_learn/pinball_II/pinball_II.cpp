@@ -4,13 +4,14 @@
 #include <conio.h>
 #include <windows.h>
 
-int h, w;
+#define H 15
+#define W 20
+
 int bx, by;
 int vx, vy;
 int px, py;
 int radius, l, r;
-//int ex, ey;
-int blocks[100][100];
+int blocks[H][W] = {0};
 int score;
 
 void gotoxy(int x, int y) {
@@ -22,26 +23,32 @@ void gotoxy(int x, int y) {
 }
 
 void startup() {
-    h = 20;
-    w = 20;
-    bx = w / 2;
-    by = h - 2;
+    // 0 space, 1 ball, 2 bar, 3 blocks
+
+    // ball
+    bx = W / 2;
+    by = H - 2;
     srand(time(NULL));
     vx = (rand() % 2 == 0) ? -1 : 1;
     vy = 0;
+    blocks[by][bx] = 1;
+
+    // bar
     radius = 3;
-    px = w / 2;
-    py = h - 1;
+    px = W / 2;
+    py = H - 1;
     l = px - radius;
     r = px + radius;
-    //ex = ex = rand() % w;
-    //ey = 0;
+    int k;
+    for (k = l; k <= r; k++) {
+        blocks[py][k] = 2;
+    }
 
     // initialize blocks
     int i, j;
     for (j = 0; j < h / 4; j++) {
         for (i = 0; i < w; i++) {
-            blocks[j][i] = 1;
+            blocks[j][i] = 3;
         }
     }
 }
@@ -61,19 +68,17 @@ void show() {
         // left boundary
         printf("|");
         for (i = 0; i < w; i++) {
-            if (i >= l && i <= r && j == h - 1) {
-                printf("+");
-            }
-            else if (i == bx && j == by) {
-                printf("o");
+            if (blocks[j][i] == 0) {
+                printf(" ");
             }
             else if (blocks[j][i] == 1) {
-                printf("x");
-                // else if (i == ex && j == ey) {
-                //   printf("x");
+                printf("o");
             }
-            else {
-                printf(" ");
+            else if (blocks[j][i] == 2) {
+                printf("=");
+            }
+            else if (blocks[j][i] == 3) {
+                printf("x");
             }
         }
         // right boundary
@@ -109,18 +114,13 @@ void updateWithoutInput() {
         exit(0);
     }
 
-    // hit block old
-    //if (bx == ex && by == ey) {
-    //    score++;
-    //    ex = rand()%w;
-    //    vy = -vy;
-    //}
-
-    // hit block new
+    // hit block
     if (by < h / 4) {
-        if (blocks[by][bx] == 1) {
-            blocks[by][bx] = 0;
+        if (blocks[by - 1][bx] == 3) {
+            blocks[by - 1][bx] = 0;
+            vy = 1;
             score++;
+            printf("\a");
         }
     }
 
@@ -131,6 +131,7 @@ void updateWithoutInput() {
     by = by + vy;
     if (by == 0) vy = 1;
     if (bx == 0 || bx == w - 1) vx = -vx;
+    blocks[by][bx] = 1;
 
     Sleep(100);
 }
@@ -140,14 +141,18 @@ void updateWithInput() {
     if(_kbhit()) {
         input = _getch();
         if (input == 'a') {
+            blocks[py][r] = 0;
             px--;
             l = px - radius;
             r = px + radius;
+            blocks[py][l] = 2;
         }
         if (input == 'd') {
+        	blocks[py][l] = 0;
             px++;
             l = px - radius;
             r = px + radius;
+            blocks[py][r] = 2;
         }
     }
 }
@@ -157,7 +162,7 @@ int checkEnding() {
     int end = 1;
     for (j = 0; j < h/4; j++) {
         for (i = 0; i < w; i++) {
-            if (blocks[j][i] == 1) {
+            if (blocks[j][i] == 3) {
                 end = 0;
                 break;
             }
