@@ -84,12 +84,14 @@ void move() {
     int i, j;
     int newTailx, newTaily;
     for (j = 1; j < H - 1; j++) {
-        if (canvas[j][i] > 0) {
-            if (canvas[j][i] == tail - 1) {
-                newTailx = i;
-                newTaily = j;
+        for (i = 0; i < W; i++) {
+            if (canvas[j][i] > 0) {
+                if (canvas[j][i] == tail - 1) {
+                    newTailx = i;
+                    newTaily = j;
+                }
+                canvas[j][i]++;
             }
-            canvas[j][i]++;
         }
     }
 
