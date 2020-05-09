@@ -69,7 +69,9 @@ void show() {
         }
         printf("\n");
     }
-    printf("SCORE: %d\nTOTAL TARGET SPAWN: %d\nHIT RATE: %f%\n", score, total, score/total);
+
+    int rate = total == 5 ? 0 : 100 * score / (total - 5);
+    printf("SCORE: %d\nTOTAL TARGET SPAWN: %d\nHIT RATE: %d%% \n", score, total, rate);
     Sleep(20);
 }
 
@@ -99,7 +101,10 @@ void updateWithoutInput() {
 
             // bullet move
             if (canvas[j][i] == 2) {
-                if (j > 0) canvas[j - 1][i] = 2;
+                if (j > 0) {
+                    canvas[j - 1][i] = 2;
+                }
+                canvas[j][i] = 0;
             }
         }
     }
@@ -145,7 +150,7 @@ void updateWithInput() {
             if (px > 0) px--;
             canvas[py][px] = 1;
         }
-        else if (input == 'd' && px < w - 1) {
+        else if (input == 'd' && px < W - 1) {
             canvas[py][px] = 0;
             if (px < W - 1) px++;
             canvas[py][px] = 1;
@@ -155,7 +160,7 @@ void updateWithInput() {
             if (py > 0) py--;
             canvas[py][px] = 1;
         }
-        else if (input == 's' && py < h - 1) {
+        else if (input == 's' && py < H - 1) {
             canvas[py][px] = 0;
             if (py < H - 1) py++;
             canvas[py][px] = 1;
@@ -166,7 +171,7 @@ void updateWithInput() {
             if (left < 0) left = 0;
             if (right > W - 1) right = W - 1;
             int k;
-            for (k - keft; k < right; k++) {
+            for (k = left; k <= right; k++) {
                 canvas[py - 1][k] = 2;
             }
         }
@@ -192,6 +197,6 @@ int main() {
     }
 
     printf("\n\n\n\n\nDONE TARGET PRACTISE\n\n\n\n\n");
-    printf("SCORE: %d\nTOTAL TARGET SPAWN: %d\nHIT RATE: %f%\n", score, total, score/total);
+    printf("SCORE: %d\nTOTAL TARGET SPAWN: %d\nHIT RATE: %d%%\n", score, total, (100 * score / (total - 5)));
     return 0;
 }
