@@ -13,7 +13,7 @@ int foodx, foody;
 int headx, heady;
 int tailx, taily;
 int tail;
-int canvas[H][W] = {};
+int canvas[H][W] = {0};
 // 0 space, -1 boundary, -2 food, 1 head, [2,inf) body
 
 void startup() {
