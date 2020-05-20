@@ -36,8 +36,32 @@ int main() {
                 bar(x - 5, y - 5, x + 5, y + 5);
             }
             else if (i % 5 == 0) {
-                circle(x, y, 3);
+            	circle(x, y, 3);
             }
+            // else if (i == 5) {
+            //     outtextxy(x, y, '1');
+            // }
+            // else if (i == 10) {
+            //     outtextxy(x, y, '2');
+            // }
+            // else if (i == 20) {
+            //     outtextxy(x, y, '4');
+            // }
+            // else if (i == 25) {
+            //     outtextxy(x, y, '5');
+            // }
+            // else if (i == 35) {
+            //     outtextxy(x, y, '7');
+            // }
+            // else if (i == 40) {
+            //     outtextxy(x, y, '8');
+            // }
+            // else if (i == 50) {
+            //     outtextxy(x, y, '10');
+            // }
+            // else if (i == 55) {
+            //     outtextxy(x, y, '11');
+            // }
             else {
                 putpixel(x, y, WHITE);
             }
