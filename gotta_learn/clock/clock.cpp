@@ -70,9 +70,9 @@ int main() {
         outtextxy(centerx - 25, centery + 100, L"CLOCK");
 
         GetLocalTime(&ti);
-        secAngle = ti.wSecond * 2 * PI / 60;
-        minAngle = ti.wMinute * 2 * PI / 60 + secAngle / 60;
-        hourAngle = ti.wHour * 2 * PI / 12 + minAngle / 12;
+        secAngle = (float)ti.wSecond * 2 * PI / 60;
+        minAngle = (float)ti.wMinute * 2 * PI / 60 + secAngle / 60;
+        hourAngle = (float)ti.wHour * 2 * PI / 12 + minAngle / 12;
 
         secEndx = centerx + secLength * sin(secAngle);
         secEndy = centery - secLength * cos(secAngle);
